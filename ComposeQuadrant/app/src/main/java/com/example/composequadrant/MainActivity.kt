@@ -7,9 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -42,7 +40,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Screen() {
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = Modifier.fillMaxSize()) {
         Row(modifier = Modifier.weight(1f)) {
             QuadrantView(
                 title = "Text composable",
@@ -78,12 +76,12 @@ fun Screen() {
 @Composable
 fun QuadrantView(title: String, info: String, background: Color, modifier: Modifier) {
     Column(
-        modifier = Modifier
-            .padding(16.dp)
-            .background(background)
-            .fillMaxHeight(),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier
+            .fillMaxSize()
+            .background(background)
+            .padding(16.dp)
     ) {
         Text(
             text = title,
