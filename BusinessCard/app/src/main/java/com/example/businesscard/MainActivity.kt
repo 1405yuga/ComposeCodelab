@@ -58,16 +58,16 @@ fun ContactInfoCard(iconVector: ImageVector, contactText: String, modifier: Modi
     Row(
         Modifier
             .padding(vertical = 4.dp)
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center
+            .fillMaxWidth()
     ) {
         Icon(
             imageVector = iconVector, contentDescription = null,
-            modifier = Modifier.padding(4.dp)
+            modifier = Modifier.padding(4.dp).weight(1f)
         )
         Text(
             text = contactText,
             modifier = Modifier.padding(4.dp)
+                .weight(1f)
         )
     }
 }
