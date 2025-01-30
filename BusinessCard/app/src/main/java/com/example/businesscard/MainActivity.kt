@@ -3,6 +3,7 @@ package com.example.businesscard
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,8 +21,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.businesscard.ui.theme.BusinessCardTheme
 
 class MainActivity : ComponentActivity() {
@@ -32,6 +36,27 @@ class MainActivity : ComponentActivity() {
                 Surface(modifier = Modifier.fillMaxSize()) { }
             }
         }
+    }
+}
+
+@Composable
+fun WelcomeLayout() {
+    Column(
+        modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Image(
+            painter = painterResource(R.drawable.ic_launcher_foreground),
+            contentDescription = null,
+            modifier = Modifier.padding(bottom = 4.dp)
+        )
+        Text(
+            text = "Jenny",
+            fontWeight = FontWeight.Bold,
+            fontSize = 40.sp, modifier = Modifier.padding(bottom = 4.dp)
+        )
+        Text(text = "Android Developer", modifier = Modifier.padding(bottom = 4.dp))
     }
 }
 
@@ -62,11 +87,14 @@ fun ContactInfoCard(iconVector: ImageVector, contactText: String, modifier: Modi
     ) {
         Icon(
             imageVector = iconVector, contentDescription = null,
-            modifier = Modifier.padding(4.dp).weight(1f)
+            modifier = Modifier
+                .padding(4.dp)
+                .weight(1f)
         )
         Text(
             text = contactText,
-            modifier = Modifier.padding(4.dp)
+            modifier = Modifier
+                .padding(4.dp)
                 .weight(1f)
         )
     }
@@ -76,6 +104,6 @@ fun ContactInfoCard(iconVector: ImageVector, contactText: String, modifier: Modi
 @Composable
 fun GreetingPreview() {
     BusinessCardTheme {
-        BottomLayout()
+        WelcomeLayout()
     }
 }
