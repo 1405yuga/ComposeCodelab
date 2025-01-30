@@ -7,6 +7,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -33,18 +34,31 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             BusinessCardTheme {
-                Surface(modifier = Modifier.fillMaxSize()) { }
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    BusinessCard(modifier = Modifier)
+                }
             }
         }
     }
 }
 
 @Composable
-fun WelcomeLayout() {
+fun BusinessCard(modifier: Modifier = Modifier) {
+    Column(modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.SpaceBetween) {
+        WelcomeLayout(modifier = Modifier.weight(1f))
+        BottomLayout(modifier = Modifier.padding(bottom = 16.dp))
+    }
+}
+
+@Composable
+fun WelcomeLayout(modifier: Modifier = Modifier) {
     Column(
-        modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = modifier
+            .padding(vertical = 8.dp, horizontal = 16.dp)
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
         Image(
             painter = painterResource(R.drawable.ic_launcher_foreground),
@@ -61,10 +75,12 @@ fun WelcomeLayout() {
 }
 
 @Composable
-fun BottomLayout() {
+fun BottomLayout(modifier: Modifier = Modifier) {
     Column(
-        Modifier.padding(vertical = 4.dp, horizontal = 8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier
+            .padding(vertical = 4.dp, horizontal = 8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Bottom
     ) {
         ContactInfoCard(
             iconVector = Icons.Outlined.Phone, contactText = "+00 (00) 00000"
@@ -83,19 +99,19 @@ fun ContactInfoCard(iconVector: ImageVector, contactText: String, modifier: Modi
     Row(
         Modifier
             .padding(vertical = 4.dp)
-            .fillMaxWidth()
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
             imageVector = iconVector, contentDescription = null,
             modifier = Modifier
                 .padding(4.dp)
-                .weight(1f)
         )
         Text(
             text = contactText,
             modifier = Modifier
                 .padding(4.dp)
-                .weight(1f)
         )
     }
 }
@@ -104,6 +120,6 @@ fun ContactInfoCard(iconVector: ImageVector, contactText: String, modifier: Modi
 @Composable
 fun GreetingPreview() {
     BusinessCardTheme {
-        WelcomeLayout()
+        BusinessCard()
     }
 }
