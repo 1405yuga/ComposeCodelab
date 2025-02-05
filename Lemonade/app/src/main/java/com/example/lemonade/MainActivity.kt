@@ -10,7 +10,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -23,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.lemonade.ui.theme.LemonadeTheme
 
 class MainActivity : ComponentActivity() {
@@ -83,13 +88,19 @@ fun LemonWithButtonAndImage(modifier: Modifier = Modifier) {
     ) {
         Button(
             onClick = { tappingCount++ },
+            shape = RoundedCornerShape(4.dp),
+            colors = ButtonDefaults.buttonColors(contentColor = MaterialTheme.colorScheme.tertiaryContainer)
         ) {
             Image(
                 painter = painterResource(step.imageResource),
-                contentDescription = stringResource(step.contentDescriptionResource)
+                contentDescription = stringResource(step.contentDescriptionResource),
+                modifier = Modifier.padding(8.dp)
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
-        Text(text = stringResource(step.textMessageResource))
+        Text(
+            text = stringResource(step.textMessageResource),
+            fontSize = 16.sp
+        )
     }
 }
