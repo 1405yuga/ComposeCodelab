@@ -7,14 +7,22 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.lemonade.ui.theme.LemonadeTheme
 
 class MainActivity : ComponentActivity() {
@@ -40,15 +48,48 @@ fun LemonadeApp() {
 
 @Composable
 fun LemonWithButtonAndImage(modifier: Modifier = Modifier) {
+    var tappingCount by remember { mutableIntStateOf(1) }
+    val step: Step = when (tappingCount % 6) {
+        1 -> Step(
+            imageResource = R.drawable.lemon_tree,
+            contentDescriptionResource = R.string.lemon_tree,
+            textMessageResource = R.string.select_lemon
+        )
+
+        2, 3, 4 -> Step(
+            imageResource = R.drawable.lemon_squeeze,
+            contentDescriptionResource = R.string.lemon,
+            textMessageResource = R.string.squeeze_lemon
+        )
+
+        5 -> Step(
+            imageResource = R.drawable.lemon_drink,
+            contentDescriptionResource = R.string.glass_of_lemonade,
+            textMessageResource = R.string.lemonade_to_drink
+        )
+
+        else -> Step(
+            imageResource = R.drawable.lemon_restart,
+            contentDescriptionResource = R.string.empty_glass,
+            textMessageResource = R.string.start_again
+        )
+
+    }
+
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(
-            painter = painterResource(R.drawable.lemon_tree),
-            contentDescription = stringResource(R.string.lemon_tree)
-        )
-        Text(text = stringResource(R.string.select_lemon))
+        Button(
+            onClick = { tappingCount++ },
+        ) {
+            Image(
+                painter = painterResource(step.imageResource),
+                contentDescription = stringResource(step.contentDescriptionResource)
+            )
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(text = stringResource(step.textMessageResource))
     }
 }
