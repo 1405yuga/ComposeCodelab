@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,12 +12,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -28,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -56,6 +58,7 @@ private fun calculateTip(amount: Double, tipPercent: Double = 15.0, roundUp: Boo
 @Composable
 fun EditNumberField(
     label: String,
+    @DrawableRes leadingIcon: Int,
     imeAction: ImeAction,
     value: String,
     onValueChange: (String) -> (Unit),
@@ -63,6 +66,7 @@ fun EditNumberField(
 ) {
     TextField(
         value = value,
+        leadingIcon = { Icon(painter = painterResource(id = leadingIcon), null) },
         onValueChange = onValueChange,
         label = { Text(text = label) },
         singleLine = true,
@@ -125,6 +129,7 @@ fun TipCalculatorLayout(modifier: Modifier = Modifier) {
         )
         EditNumberField(
             label = "Bill Amount",
+            leadingIcon = R.drawable.baseline_money_24,
             value = amountInput,
             imeAction = ImeAction.Next,
             onValueChange = { amountInput = it },
@@ -134,6 +139,7 @@ fun TipCalculatorLayout(modifier: Modifier = Modifier) {
         )
         EditNumberField(
             label = "Tip Percentage",
+            leadingIcon = R.drawable.baseline_percent_24,
             value = tipPercentInput,
             imeAction = ImeAction.Done,
             onValueChange = { tipPercentInput = it },
