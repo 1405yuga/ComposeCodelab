@@ -6,15 +6,19 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -43,8 +47,9 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-private fun calculateTip(amount: Double, tipPercent: Double = 15.0): String {
-    val tip = tipPercent / 100 * amount
+private fun calculateTip(amount: Double, tipPercent: Double = 15.0, roundUp: Boolean): String {
+    var tip = tipPercent / 100 * amount
+    if (roundUp) tip = kotlin.math.ceil(tip)
     return NumberFormat.getCurrencyInstance().format(tip)
 }
 
@@ -70,13 +75,36 @@ fun EditNumberField(
 }
 
 @Composable
+fun RoundUpTipRow(
+    roundUp: Boolean,
+    onRoundUpChanged: (Boolean) -> (Unit),
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(bottom = 32.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(text = "Round up tip?")
+        Switch(
+            checked = roundUp,
+            onCheckedChange = onRoundUpChanged,
+            modifier = modifier
+                .fillMaxWidth()
+                .wrapContentWidth(Alignment.End)
+        )
+    }
+}
+
+@Composable
 fun TipCalculatorLayout(modifier: Modifier = Modifier) {
     var amountInput by remember { mutableStateOf("") }
     val amount = amountInput.toDoubleOrNull() ?: 0.0
     var tipPercentInput by remember { mutableStateOf("") }
     val tipPercent = tipPercentInput.toDoubleOrNull() ?: 0.0
-
-    val tipAmount = calculateTip(amount = amount, tipPercent = tipPercent)
+    var roundUp by remember { mutableStateOf(false) }
+    val tipAmount = calculateTip(amount = amount, tipPercent = tipPercent, roundUp = roundUp)
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -112,6 +140,11 @@ fun TipCalculatorLayout(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .padding(bottom = 32.dp)
                 .fillMaxWidth()
+        )
+        RoundUpTipRow(
+            roundUp = roundUp,
+            onRoundUpChanged = { roundUp = it },
+            modifier = modifier
         )
         Text(
             text = "Tip Amount: $tipAmount",
