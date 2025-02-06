@@ -49,6 +49,7 @@ private fun calculateTip(amount: Double, tipPercent: Double = 15.0): String {
 
 @Composable
 fun EditNumberField(
+    label: String,
     value: String,
     onValueChange: (String) -> (Unit),
     modifier: Modifier = Modifier
@@ -56,7 +57,7 @@ fun EditNumberField(
     TextField(
         value = value,
         onValueChange = onValueChange,
-        label = { Text(text = "Bill Amount") },
+        label = { Text(text = label) },
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         modifier = modifier
@@ -67,7 +68,10 @@ fun EditNumberField(
 fun TipCalculatorLayout(modifier: Modifier = Modifier) {
     var amountInput by remember { mutableStateOf("") }
     val amount = amountInput.toDoubleOrNull() ?: 0.0
-    val tipAmount = calculateTip(amount = amount)
+    var tipPercentInput by remember { mutableStateOf("") }
+    val tipPercent = tipPercentInput.toDoubleOrNull() ?: 0.0
+
+    val tipAmount = calculateTip(amount = amount, tipPercent = tipPercent)
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -87,8 +91,17 @@ fun TipCalculatorLayout(modifier: Modifier = Modifier) {
                 .align(alignment = Alignment.Start)
         )
         EditNumberField(
+            label = "Bill Amount",
             value = amountInput,
             onValueChange = { amountInput = it },
+            modifier = Modifier
+                .padding(bottom = 32.dp)
+                .fillMaxWidth()
+        )
+        EditNumberField(
+            label = "Tip Percentage",
+            value = tipPercentInput,
+            onValueChange = { tipPercentInput = it },
             modifier = Modifier
                 .padding(bottom = 32.dp)
                 .fillMaxWidth()
