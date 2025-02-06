@@ -18,9 +18,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -39,6 +42,27 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+val artList = listOf(
+    Art(
+        imageResource = R.drawable.starry,
+        artTitle = "The Starry Night",
+        artistName = "Vincent van Gogh",
+        yearPainted = 1889
+    ),
+    Art(
+        imageResource = R.drawable.ganpati,
+        artTitle = "Ganesha",
+        artistName = "Karan Gaikwad",
+        yearPainted = 2022
+    ),
+    Art(
+        imageResource = R.drawable.images,
+        artTitle = "London Bridge",
+        artistName = "Claude Monet",
+        yearPainted = 1871
+    ),
+)
 
 @Composable
 fun ArtImageAndInfo(
@@ -109,6 +133,8 @@ fun ActionButton(
 
 @Composable
 fun ArtSpaceLayout(modifier: Modifier = Modifier) {
+    var count by remember { mutableIntStateOf(0) }
+    val currentArt = artList[kotlin.math.abs(count) % artList.size]
     Column(
         modifier =
         modifier
@@ -118,10 +144,10 @@ fun ArtSpaceLayout(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         ArtImageAndInfo(
-            imageResource = R.drawable.starry,
-            title = "Art title",
-            artist = "some artist",
-            year = 1000,
+            imageResource = currentArt.imageResource,
+            title = currentArt.artTitle,
+            artist = currentArt.artistName,
+            year = currentArt.yearPainted,
             modifier = modifier
                 .weight(1f)
                 .padding(bottom = 16.dp)
@@ -133,13 +159,13 @@ fun ArtSpaceLayout(modifier: Modifier = Modifier) {
         ) {
             ActionButton(
                 text = "Previous",
-                onClickAction = {},
+                onClickAction = { count++ },
                 modifier = modifier.weight(1f)
             )
 
             ActionButton(
                 text = "Next",
-                onClickAction = {},
+                onClickAction = { count-- },
                 modifier = modifier.weight(1f)
             )
         }
