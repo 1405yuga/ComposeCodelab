@@ -3,7 +3,6 @@ package com.example.artspace
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,14 +11,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -49,7 +50,6 @@ fun ArtImageAndInfo(
 ) {
     Column(
         modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         Surface(
@@ -65,17 +65,25 @@ fun ArtImageAndInfo(
                 modifier = Modifier.padding(32.dp)
             )
         }
-        Text(
-            text = title,
-            fontWeight = FontWeight.ExtraBold,
-            fontSize = 22.sp,
-            modifier = Modifier.padding(bottom = 4.dp)
-        )
-        Text(
-            text = "$artist $year",
-            fontSize = 18.sp,
-            modifier = Modifier.padding(bottom = 4.dp)
-        )
+        Surface(
+            color = MaterialTheme.colorScheme.secondaryContainer,
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Column(modifier = Modifier.padding(12.dp)) {
+                Text(
+                    text = title,
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = 22.sp,
+                    modifier = Modifier.padding(bottom = 4.dp)
+                )
+                Text(
+                    text = "$artist $year",
+                    fontSize = 18.sp,
+                    modifier = Modifier.padding(bottom = 4.dp)
+                )
+            }
+        }
     }
 }
 
@@ -88,9 +96,12 @@ fun ActionButton(
 
     Button(
         onClick = onClickAction,
-        shape = RectangleShape,
-        border = BorderStroke(0.5.dp, color = Color.Black),
-        modifier = modifier.padding(horizontal = 2.dp)
+        shape = RoundedCornerShape(12.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.onSecondaryContainer,
+            contentColor = MaterialTheme.colorScheme.onSecondary
+        ),
+        modifier = modifier.padding(horizontal = 8.dp)
     ) {
         Text(text = text)
     }
@@ -107,7 +118,7 @@ fun ArtSpaceLayout(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         ArtImageAndInfo(
-            imageResource = R.drawable.ic_launcher_background,
+            imageResource = R.drawable.starry,
             title = "Art title",
             artist = "some artist",
             year = 1000,
