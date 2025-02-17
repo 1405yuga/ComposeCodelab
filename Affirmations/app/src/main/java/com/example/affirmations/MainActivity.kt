@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -60,13 +62,27 @@ fun AffirmationCard(
 }
 
 @Composable
+fun AffirmationList(affirmationList: List<Affirmation>, modifier: Modifier = Modifier) {
+    LazyColumn(modifier = modifier) {
+        items(items = affirmationList) { affirmation ->
+            AffirmationCard(
+                affirmation = affirmation,
+                modifier = Modifier.padding(8.dp)
+            )
+
+        }
+    }
+}
+
+@Composable
 fun AffirmationsApp() {
-    val data = Datasource().loadAffirmations()
-    AffirmationCard(data[0])
+
+    AffirmationList(affirmationList = Datasource().loadAffirmations())
 }
 
 @Composable
 @Preview(
+    showSystemUi = true,
     showBackground = true
 )
 fun AffirmationsPreview() {
