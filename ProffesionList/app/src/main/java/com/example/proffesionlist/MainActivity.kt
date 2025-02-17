@@ -10,9 +10,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -41,7 +46,24 @@ class MainActivity : ComponentActivity() {
 @Composable
 @Preview(showBackground = true)
 fun ProfessionListPreview() {
-    ProfessionCard(profession = DataSource.topics[2])
+    ProfessionListApp()
+}
+
+@Composable
+fun ProfessionList(modifier: Modifier = Modifier) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = modifier.padding(
+            horizontal = 8.dp,
+            vertical = 8.dp
+        )
+    ) {
+        items(items = DataSource.topics) { profession ->
+            ProfessionCard(profession = profession)
+        }
+    }
 }
 
 @Composable
@@ -49,7 +71,6 @@ fun ProfessionCard(profession: Profession, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .wrapContentHeight()
-            .padding(vertical = 8.dp)
     ) {
         Row(modifier = Modifier.fillMaxWidth()) {
             Image(
@@ -94,5 +115,10 @@ fun ProfessionCard(profession: Profession, modifier: Modifier = Modifier) {
 
 @Composable
 fun ProfessionListApp() {
-    TODO("Not yet implemented")
+    Surface(
+        modifier = Modifier
+            .statusBarsPadding()
+    ) {
+        ProfessionList()
+    }
 }
