@@ -4,9 +4,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -17,6 +21,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -53,12 +61,22 @@ fun TipItemCard(
     index: Int,
     modifier: Modifier = Modifier
 ) {
+    var expanded by remember { mutableStateOf(false) }
     Card(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
+        onClick = { expanded = !expanded }
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.padding(12.dp)
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(12.dp)
+                .animateContentSize(
+                    animationSpec = spring(
+                        dampingRatio = Spring.DampingRatioNoBouncy,
+                        stiffness = Spring.StiffnessMedium
+                    )
+                )
         ) {
             Text(
                 text = "Day ${index + 1}",
@@ -73,10 +91,12 @@ fun TipItemCard(
                 contentDescription = null,
                 contentScale = ContentScale.FillBounds
             )
-            Text(
-                text = stringResource(tip.description),
-                style = MaterialTheme.typography.displayMedium
-            )
+            if (expanded) {
+                Text(
+                    text = stringResource(tip.description),
+                    style = MaterialTheme.typography.displayMedium
+                )
+            }
         }
     }
 }
