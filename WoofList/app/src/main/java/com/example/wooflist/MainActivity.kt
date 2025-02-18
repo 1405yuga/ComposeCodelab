@@ -78,14 +78,16 @@ fun WoofItemCard(woof: Woof, modifier: Modifier = Modifier) {
 
 @Composable
 fun WoofListApp(modifier: Modifier = Modifier) {
-    LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(10.dp),
-        modifier = modifier
-            .statusBarsPadding()
-            .padding(horizontal = 12.dp, vertical = 8.dp)
-    ) {
-        items(WoofListData.dataList) { woof ->
-            WoofItemCard(woof = woof, modifier = modifier)
+    Scaffold { it ->
+        LazyColumn(
+            contentPadding = it,
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            modifier = modifier
+                .statusBarsPadding()
+        ) {
+            items(WoofListData.dataList) { woof ->
+                WoofItemCard(woof = woof, modifier = modifier)
+            }
         }
     }
 }
