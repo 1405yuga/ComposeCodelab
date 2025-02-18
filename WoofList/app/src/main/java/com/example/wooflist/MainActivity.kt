@@ -15,12 +15,15 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -50,14 +53,16 @@ fun WoofItemCard(woof: Woof, modifier: Modifier = Modifier) {
             .padding(horizontal = 8.dp)
     ) {
         Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Image(
                 painter = painterResource(woof.imageResourceId),
                 contentDescription = stringResource(woof.name),
-                contentScale = ContentScale.Inside,
+                contentScale = ContentScale.Crop,
                 modifier = modifier
-                    .size(height = 48.dp, width = 48.dp)
+                    .padding(dimensionResource(R.dimen.padding_small))
+                    .size(dimensionResource(R.dimen.image_size))
+                    .clip(MaterialTheme.shapes.small)
             )
             Column(
                 modifier = modifier
