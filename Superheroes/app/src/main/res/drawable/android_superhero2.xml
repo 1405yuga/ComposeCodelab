@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2022 The Android Open Source Project
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -57,11 +56,11 @@
         android:pathData="M542.39,695h-4.78 C444.49,695,369,619.51,369,526.39V271h342v255.39C711,619.51,635.51,695,542.39,695z" />
     <group>
         <path
-            android:fillColor="#910916"
             android:fillAlpha="0.7"
-            android:strokeAlpha="0.7"
+            android:fillColor="#910916"
+            android:pathData="M575.44,617.37c-14.06,3.67-37.19,6.42-57.93-6.27c-3.2-1.96-4.21-6.15-2.26-9.35 c1.97-3.19,6.16-4.22,9.35-2.25c25.6,15.66,57.83,1.2,58.17,1.06c3.43-1.55,7.45-0.07,9.02,3.33c1.58,3.41,0.09,7.44-3.31,9.02 C587.93,613.16,582.99,615.39,575.44,617.37z"
             android:strokeWidth="1"
-            android:pathData="M575.44,617.37c-14.06,3.67-37.19,6.42-57.93-6.27c-3.2-1.96-4.21-6.15-2.26-9.35 c1.97-3.19,6.16-4.22,9.35-2.25c25.6,15.66,57.83,1.2,58.17,1.06c3.43-1.55,7.45-0.07,9.02,3.33c1.58,3.41,0.09,7.44-3.31,9.02 C587.93,613.16,582.99,615.39,575.44,617.37z" />
+            android:strokeAlpha="0.7" />
     </group>
     <path
         android:fillColor="#331816"
