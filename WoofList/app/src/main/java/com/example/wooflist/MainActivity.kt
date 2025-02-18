@@ -46,6 +46,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun WoofItemCard(woof: Woof, modifier: Modifier = Modifier) {
+    //by default: card shape is medium, so not need to set explicitly
     Card(
         modifier = modifier
             .fillMaxWidth()
