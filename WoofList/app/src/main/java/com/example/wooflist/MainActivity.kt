@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -139,7 +140,11 @@ fun WoofItemButton(expanded: Boolean, onClick: () -> Unit, modifier: Modifier) {
         modifier = modifier,
     ) {
         Icon(
-            imageVector = Icons.Filled.ExpandMore,
+            imageVector = if (expanded) {
+                Icons.Filled.ExpandMore
+            } else {
+                Icons.Filled.ExpandLess
+            },
             contentDescription = "Expand button",
             tint = MaterialTheme.colorScheme.secondary
         )
