@@ -5,10 +5,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.StringRes
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -63,6 +65,10 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun WoofItemCard(woof: Woof, modifier: Modifier = Modifier) {
     var expanded by remember { mutableStateOf(false) }
+    val color by animateColorAsState(
+        targetValue = if (expanded) MaterialTheme.colorScheme.tertiaryContainer
+        else MaterialTheme.colorScheme.primaryContainer
+    )
 
     //by default: card shape is medium, so not need to set explicitly
     Card(
@@ -79,6 +85,7 @@ fun WoofItemCard(woof: Woof, modifier: Modifier = Modifier) {
                         stiffness = Spring.StiffnessLow
                     )
                 )
+                .background(color = color)
         ) {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
