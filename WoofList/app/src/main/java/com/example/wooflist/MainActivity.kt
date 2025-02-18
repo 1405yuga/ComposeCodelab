@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -26,6 +27,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -53,6 +58,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun WoofItemCard(woof: Woof, modifier: Modifier = Modifier) {
+    var expanded by remember { mutableStateOf(false) }
+
     //by default: card shape is medium, so not need to set explicitly
     Card(
         modifier = modifier
@@ -60,39 +67,67 @@ fun WoofItemCard(woof: Woof, modifier: Modifier = Modifier) {
             .wrapContentHeight()
             .padding(horizontal = 8.dp)
     ) {
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            Image(
-                painter = painterResource(woof.imageResourceId),
-                contentDescription = stringResource(woof.name),
-                contentScale = ContentScale.Crop,
-                modifier = modifier
-                    .padding(dimensionResource(R.dimen.padding_small))
-                    .size(dimensionResource(R.dimen.image_size))
-                    .clip(MaterialTheme.shapes.small)
-            )
-            Column(
-                modifier = modifier
-                    .padding(vertical = 4.dp)
-                    .weight(2f)
+        Column {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                Text(
-                    text = stringResource(woof.name),
-                    style = MaterialTheme.typography.displayMedium,
-                    modifier = Modifier.padding(top = dimensionResource(id = R.dimen.padding_small))
+                Image(
+                    painter = painterResource(woof.imageResourceId),
+                    contentDescription = stringResource(woof.name),
+                    contentScale = ContentScale.Crop,
+                    modifier = modifier
+                        .padding(dimensionResource(R.dimen.padding_small))
+                        .size(dimensionResource(R.dimen.image_size))
+                        .clip(MaterialTheme.shapes.small)
                 )
-                Text(
-                    text = "${woof.age} years old", style = MaterialTheme.typography.bodyLarge
+                Column(
+                    modifier = modifier
+                        .padding(vertical = 4.dp)
+                        .weight(2f)
+                ) {
+                    Text(
+                        text = stringResource(woof.name),
+                        style = MaterialTheme.typography.displayMedium,
+                        modifier = Modifier.padding(top = dimensionResource(id = R.dimen.padding_small))
+                    )
+                    Text(
+                        text = "${woof.age} years old", style = MaterialTheme.typography.bodyLarge
+                    )
+                }
+                WoofItemButton(
+                    expanded = expanded,
+                    onClick = {/*TODO*/ },
+                    modifier = modifier
                 )
             }
-            WoofItemButton(
-                expanded = false,
-                onClick = {},
-                modifier = modifier
-                    .weight(1f)
+
+            WoofHobby(
+                hobby = woof.hobbies,
+                modifier = Modifier.padding(
+                    start = dimensionResource(R.dimen.padding_medium),
+                    top = dimensionResource(R.dimen.padding_small),
+                    end = dimensionResource(R.dimen.padding_medium),
+                    bottom = dimensionResource(R.dimen.padding_medium)
+                )
             )
         }
+    }
+}
+
+@Composable
+fun WoofHobby(
+    @StringRes hobby: Int,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier) {
+        Text(
+            text = stringResource(R.string.about),
+            style = MaterialTheme.typography.labelSmall
+        )
+        Text(
+            text = stringResource(hobby),
+            style = MaterialTheme.typography.bodyLarge
+        )
     }
 }
 
