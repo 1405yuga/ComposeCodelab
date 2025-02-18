@@ -5,11 +5,17 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,20 +43,25 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun WoofItemCard(woof: Woof, modifier: Modifier = Modifier) {
     Card(
+        shape = RoundedCornerShape(0.dp),
         modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight()
+            .padding(horizontal = 8.dp)
     ) {
-        Row {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             Image(
                 painter = painterResource(woof.imageResourceId),
                 contentDescription = stringResource(woof.name),
                 contentScale = ContentScale.Inside,
-                modifier = modifier.weight(1f)
+                modifier = modifier
+                    .size(height = 48.dp, width = 48.dp)
             )
             Column(
                 modifier = modifier
-                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                    .padding(vertical = 4.dp)
                     .weight(2f)
             ) {
                 Text(text = stringResource(woof.name))
@@ -62,10 +73,20 @@ fun WoofItemCard(woof: Woof, modifier: Modifier = Modifier) {
 
 @Composable
 fun WoofListApp(modifier: Modifier = Modifier) {
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+        modifier = modifier
+            .statusBarsPadding()
+            .padding(horizontal = 12.dp, vertical = 8.dp)
+    ) {
+        items(WoofListData.dataList) { woof ->
+            WoofItemCard(woof = woof, modifier = modifier)
+        }
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun WoofListPreview() {
-    WoofItemCard(WoofListData.dataList[0])
+    WoofListApp(modifier = Modifier)
 }
