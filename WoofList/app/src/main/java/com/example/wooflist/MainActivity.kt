@@ -35,6 +35,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             WoofListTheme {
+                WoofListApp(modifier = Modifier)
             }
         }
     }
@@ -43,7 +44,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun WoofItemCard(woof: Woof, modifier: Modifier = Modifier) {
     Card(
-        shape = RoundedCornerShape(0.dp),
         modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight()
@@ -88,5 +88,15 @@ fun WoofListApp(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun WoofListPreview() {
-    WoofListApp(modifier = Modifier)
+    WoofListTheme {
+        WoofListApp(modifier = Modifier)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun WoofListDarkPreview() {
+    WoofListTheme(darkTheme = true) {
+        WoofListApp(modifier = Modifier)
+    }
 }
