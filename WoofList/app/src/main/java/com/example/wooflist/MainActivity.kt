@@ -15,9 +15,13 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -82,7 +86,27 @@ fun WoofItemCard(woof: Woof, modifier: Modifier = Modifier) {
                     text = "${woof.age} years old", style = MaterialTheme.typography.bodyLarge
                 )
             }
+            WoofItemButton(
+                expanded = false,
+                onClick = {},
+                modifier = modifier
+                    .weight(1f)
+            )
         }
+    }
+}
+
+@Composable
+fun WoofItemButton(expanded: Boolean, onClick: () -> Unit, modifier: Modifier) {
+    IconButton(
+        onClick = onClick,
+        modifier = modifier,
+    ) {
+        Icon(
+            imageVector = Icons.Filled.ExpandMore,
+            contentDescription = "Expand button",
+            tint = MaterialTheme.colorScheme.secondary
+        )
     }
 }
 
