@@ -96,20 +96,21 @@ fun WoofItemCard(woof: Woof, modifier: Modifier = Modifier) {
                 }
                 WoofItemButton(
                     expanded = expanded,
-                    onClick = {/*TODO*/ },
+                    onClick = { expanded = !expanded },
                     modifier = modifier
                 )
             }
-
-            WoofHobby(
-                hobby = woof.hobbies,
-                modifier = Modifier.padding(
-                    start = dimensionResource(R.dimen.padding_medium),
-                    top = dimensionResource(R.dimen.padding_small),
-                    end = dimensionResource(R.dimen.padding_medium),
-                    bottom = dimensionResource(R.dimen.padding_medium)
+            if (expanded) {
+                WoofHobby(
+                    hobby = woof.hobbies,
+                    modifier = Modifier.padding(
+                        start = dimensionResource(R.dimen.padding_medium),
+                        top = dimensionResource(R.dimen.padding_small),
+                        end = dimensionResource(R.dimen.padding_medium),
+                        bottom = dimensionResource(R.dimen.padding_medium)
+                    )
                 )
-            )
+            }
         }
     }
 }
