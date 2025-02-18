@@ -70,8 +70,15 @@ fun WoofItemCard(woof: Woof, modifier: Modifier = Modifier) {
                     .padding(vertical = 4.dp)
                     .weight(2f)
             ) {
-                Text(text = stringResource(woof.name))
-                Text(text = "${woof.age} years old")
+                Text(
+                    text = stringResource(woof.name),
+                    style = MaterialTheme.typography.displayMedium,
+                    modifier = Modifier.padding(top = dimensionResource(id = R.dimen.padding_small))
+                )
+                Text(
+                    text = "${woof.age} years old",
+                    style = MaterialTheme.typography.bodyLarge
+                )
             }
         }
     }
