@@ -1,3 +1,122 @@
 <resources>
     <string name="app_name">WellnessTips</string>
-</resources>
+        <!-- Day 1 -->
+        <string name="day1_title">Morning Stretch</string>
+        <string name="day1_description">Begin your day with a 10-minute full-body stretch to wake up your muscles and boost circulation.</string>
+
+        <!-- Day 2 -->
+        <string name="day2_title">Hydration Check</string>
+        <string name="day2_description">Drink at least 8 glasses of water today to stay hydrated and improve digestion.</string>
+
+        <!-- Day 3 -->
+        <string name="day3_title">Mindful Breathing</string>
+        <string name="day3_description">Spend 5 minutes practicing deep breathing to reduce stress and improve focus.</string>
+
+        <!-- Day 4 -->
+        <string name="day4_title">Screen-Free Hour</string>
+        <string name="day4_description">Dedicate one hour today to be completely screen-free to rest your eyes and mind.</string>
+
+        <!-- Day 5 -->
+        <string name="day5_title">Healthy Breakfast</string>
+        <string name="day5_description">Start your day with a balanced breakfast including protein, fiber, and healthy fats.</string>
+
+        <!-- Day 6 -->
+        <string name="day6_title">Walk Outside</string>
+        <string name="day6_description">Take a 20-minute walk outdoors to enjoy fresh air and reconnect with nature.</string>
+
+        <!-- Day 7 -->
+        <string name="day7_title">Gratitude Journal</string>
+        <string name="day7_description">Write down three things you’re grateful for to cultivate a positive mindset.</string>
+
+        <!-- Day 8 -->
+        <string name="day8_title">Digital Declutter</string>
+        <string name="day8_description">Clean up your phone or computer by deleting unnecessary files and apps.</string>
+
+        <!-- Day 9 -->
+        <string name="day9_title">Sleep Reset</string>
+        <string name="day9_description">Aim for 7-8 hours of sleep tonight by sticking to a consistent bedtime.</string>
+
+        <!-- Day 10 -->
+        <string name="day10_title">Protein Focus</string>
+        <string name="day10_description">Include a protein-rich meal in your diet today to support muscle repair and energy.</string>
+
+        <!-- Day 11 -->
+        <string name="day11_title">Social Connection</string>
+        <string name="day11_description">Reach out to a friend or family member you haven’t spoken to in a while.</string>
+
+        <!-- Day 12 -->
+        <string name="day12_title">Meditation Practice</string>
+        <string name="day12_description">Spend 10 minutes meditating to clear your mind and center yourself.</string>
+
+        <!-- Day 13 -->
+        <string name="day13_title">Fruit Day</string>
+        <string name="day13_description">Incorporate at least two servings of fruit into your meals for added vitamins.</string>
+
+        <!-- Day 14 -->
+        <string name="day14_title">Strength Training</string>
+        <string name="day14_description">Do a short 15-minute strength workout to boost metabolism and build muscle.</string>
+
+        <!-- Day 15 -->
+        <string name="day15_title">Unwind with a Book</string>
+        <string name="day15_description">Spend 30 minutes reading a book to relax your mind and reduce stress.</string>
+
+        <!-- Day 16 -->
+        <string name="day16_title">Cook a New Recipe</string>
+        <string name="day16_description">Try a healthy recipe you’ve never made before to bring variety to your meals.</string>
+
+        <!-- Day 17 -->
+        <string name="day17_title">Practice Kindness</string>
+        <string name="day17_description">Perform a random act of kindness for someone to spread positivity.</string>
+
+        <!-- Day 18 -->
+        <string name="day18_title">Yoga Flow</string>
+        <string name="day18_description">Do a 20-minute yoga session to improve flexibility and reduce tension.</string>
+
+        <!-- Day 19 -->
+        <string name="day19_title">Limit Caffeine</string>
+        <string name="day19_description">Reduce your caffeine intake today and replace it with herbal tea or water.</string>
+
+        <!-- Day 20 -->
+        <string name="day20_title">No Added Sugar</string>
+        <string name="day20_description">Avoid added sugars today to give your body a break from sweeteners.</string>
+
+        <!-- Day 21 -->
+        <string name="day21_title">Journal Reflection</string>
+        <string name="day21_description">Write about your thoughts, feelings, and goals to gain clarity.</string>
+
+        <!-- Day 22 -->
+        <string name="day22_title">Balance Posture</string>
+        <string name="day22_description">Pay attention to your posture throughout the day to prevent aches.</string>
+
+        <!-- Day 23 -->
+        <string name="day23_title">Nature Break</string>
+        <string name="day23_description">Spend 15 minutes in nature to improve mood and mental clarity.</string>
+
+        <!-- Day 24 -->
+        <string name="day24_title">Meal Prep</string>
+        <string name="day24_description">Plan and prepare healthy meals for the upcoming week to stay on track.</string>
+
+        <!-- Day 25 -->
+        <string name="day25_title">Hobby Time</string>
+        <string name="day25_description">Dedicate an hour to a hobby or activity you enjoy to boost creativity.</string>
+
+        <!-- Day 26 -->
+        <string name="day26_title">Affirmations</string>
+        <string name="day26_description">Repeat positive affirmations to build self-confidence and self-worth.</string>
+
+        <!-- Day 27 -->
+        <string name="day27_title">Aromatherapy</string>
+        <string name="day27_description">Use essential oils like lavender or eucalyptus to create a relaxing atmosphere.</string>
+
+        <!-- Day 28 -->
+        <string name="day28_title">Cardio Burst</string>
+        <string name="day28_description">Do a 15-minute cardio workout to energize your body and improve heart health.</string>
+
+        <!-- Day 29 -->
+        <string name="day29_title">Reflect and Plan</string>
+        <string name="day29_description">Reflect on your wellness journey and set goals for the next month.</string>
+
+        <!-- Day 30 -->
+        <string name="day30_title">Celebrate You</string>
+        <string name="day30_description">Treat yourself to something you love, like a spa day, favorite meal, or relaxing activity.</string>
+    </resources>
