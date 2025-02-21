@@ -1,5 +1,7 @@
 package com.example.unscramble.data
 
+val MAX_NO_OF_WORDS = 10
+val SCORE_VALUE = 10
 val allWords = setOf(
     "animal",
     "auto",
