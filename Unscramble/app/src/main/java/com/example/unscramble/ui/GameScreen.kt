@@ -49,7 +49,6 @@ fun GameScreen(
 ) {
     val mediumPadding = dimensionResource(R.dimen.padding_medium)
     val gameUiState by gameViewModel.uiState.collectAsState()
-
     Column(
         modifier = Modifier
             .statusBarsPadding()
@@ -71,10 +70,11 @@ fun GameScreen(
             isGuessWrong = gameUiState.isGuessWordWrong,
             onUserGuessChanged = { gameViewModel.updateUserGuess(it) },
             onKeyboardDone = { gameViewModel.checkUserGuess() },
+            wordCount = gameUiState.currentWordCount,
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(mediumPadding)
+                .padding(mediumPadding),
         )
         Column(
             modifier = Modifier
@@ -105,7 +105,7 @@ fun GameScreen(
             }
         }
 
-        GameStatus(score = 0, modifier = Modifier.padding(20.dp))
+        GameStatus(score = gameUiState.score, modifier = Modifier.padding(20.dp))
     }
 }
 
@@ -129,6 +129,7 @@ fun GameLayout(
     isGuessWrong: Boolean,
     onUserGuessChanged: (String) -> Unit,
     onKeyboardDone: () -> Unit,
+    wordCount: Int,
     modifier: Modifier = Modifier
 ) {
     val mediumPadding = dimensionResource(R.dimen.padding_medium)
@@ -148,7 +149,7 @@ fun GameLayout(
                     .background(colorScheme.surfaceTint)
                     .padding(horizontal = 10.dp, vertical = 4.dp)
                     .align(alignment = Alignment.End),
-                text = stringResource(R.string.word_count, 0),
+                text = stringResource(R.string.word_count, wordCount),
                 style = typography.titleMedium,
                 color = colorScheme.onPrimary
             )
@@ -162,7 +163,7 @@ fun GameLayout(
                 style = typography.titleMedium
             )
             OutlinedTextField(
-                value = "",
+                value = userGuess,
                 singleLine = true,
                 shape = shapes.large,
                 modifier = Modifier.fillMaxWidth(),
@@ -171,7 +172,7 @@ fun GameLayout(
                     unfocusedContainerColor = colorScheme.surface,
                     disabledContainerColor = colorScheme.surface,
                 ),
-                onValueChange = { },
+                onValueChange = { onUserGuessChanged(it) },
                 label = {
                     if (isGuessWrong) {
                         Text(stringResource(R.string.wrong_guess))
