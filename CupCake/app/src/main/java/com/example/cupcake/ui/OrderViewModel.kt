@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -36,4 +37,36 @@ class OrderViewModel : ViewModel() {
             currentState.copy(flavor = desiredFlavor)
         }
     }
+
+    fun setQuantity(quantity: Int) {
+        _uiState.update { currentState ->
+            currentState.copy(quantity = quantity)
+        }
+    }
+
+    fun setDate(pickUpDate: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                date = pickUpDate,
+                price = calculatePrice(pickUpDate = pickUpDate)
+            )
+        }
+    }
+
+    private fun calculatePrice(
+        quantity: Int = _uiState.value.quantity,
+        pickUpDate: String = _uiState.value.date
+    ): String {
+        var calculatedPrice = quantity * PRICE_PER_CUPCAKE
+        if (pickupOptions()[0] == pickUpDate) {
+            calculatedPrice += PRICE_FOR_SAME_DAY_PICKUP
+        }
+        val formattedPrice = NumberFormat.getCurrencyInstance().format(calculatedPrice)
+        return formattedPrice
+    }
+
+    fun resetOrder() {
+        _uiState.value = OrderUiState(pickupOptions = pickupOptions())
+    }
+
 }
