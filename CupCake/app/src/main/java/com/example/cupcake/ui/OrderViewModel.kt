@@ -5,6 +5,7 @@ import com.example.cupcake.data.OrderUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -28,5 +29,11 @@ class OrderViewModel : ViewModel() {
             calendar.add(Calendar.DATE, 1)
         }
         return dateOptions
+    }
+
+    fun setFlavor(desiredFlavor: String) {
+        _uiState.update { currentState ->
+            currentState.copy(flavor = desiredFlavor)
+        }
     }
 }
