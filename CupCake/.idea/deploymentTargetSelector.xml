@@ -8,6 +8,15 @@
       <SelectionState runConfigName="cupcakeNavHost_verifyStartDestination()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+      <SelectionState runConfigName="cupcakeNavHost_verifyBackNavigationNotShownOnStartOrderScreen()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="cupcakeNavHost_clickFirstCake_navigateToSelectFlavorScreen()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="selectOptionScreen_verifyContent()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
     </selectionStates>
   </component>
 </project>
