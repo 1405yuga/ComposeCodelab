@@ -59,4 +59,10 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    //testing navigation------------------------------
+    androidTestImplementation(platform(libs.androidx.compose.bom.v20230501))
+    androidTestImplementation(libs.ui.test.junit4)
+    androidTestImplementation(libs.androidx.navigation.testing)
+    androidTestImplementation(libs.androidx.espresso.intents)
+    androidTestImplementation(libs.androidx.junit.v115)
 }
