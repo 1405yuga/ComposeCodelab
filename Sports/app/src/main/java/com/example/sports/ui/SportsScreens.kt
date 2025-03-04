@@ -16,7 +16,9 @@
 
 package com.example.sports.ui
 
+import android.app.Activity
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -27,6 +29,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -126,7 +129,19 @@ fun SportsApp(
                 )
             }
         } else {
-//            SportsListAndDetails()
+            val activity = LocalActivity.current as? Activity
+            SportsListAndDetails(
+                sports = LocalSportsDataProvider.getSportsData(),
+                onClick = {
+                    viewModel.updateCurrentSport(it)
+                },
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = innerPadding,
+                selectedSport = uiState.currentSport,
+                onBackPressed = {
+                    activity?.finish()
+                }
+            )
         }
 
     }
@@ -141,18 +156,18 @@ fun SportsListAndDetails(
     selectedSport: Sport,
     onBackPressed: () -> Unit
 ) {
-    Row {
+    Row(modifier = modifier) {
         SportsList(
             sports = sports,
             onClick = onClick,
-            modifier = modifier.weight(1f),
+            modifier = Modifier.weight(1f),
             contentPadding = contentPadding
         )
         SportsDetail(
             selectedSport = selectedSport,
             onBackPressed = onBackPressed,
             contentPadding = contentPadding,
-            modifier = modifier
+            modifier = Modifier
                 .weight(1f)
                 .padding(start = 8.dp)
         )
