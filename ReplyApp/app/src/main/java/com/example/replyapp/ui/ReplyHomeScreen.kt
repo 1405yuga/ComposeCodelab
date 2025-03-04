@@ -120,25 +120,15 @@ fun ReplyHomeScreen(
             )
         }
     } else {
-        if (replyUiState.isShowingHomepage) {
-            ReplyAppContent(
-                navigationType = navigationType,
-                contentType = contentType,
-                replyUiState = replyUiState,
-                onTabPressed = onTabPressed,
-                onEmailCardPressed = onEmailCardPressed,
-                navigationItemContentList = navigationItemContentList,
-                modifier = modifier
-            )
-        } else {
-            ReplyDetailsScreen(
-                replyUiState = replyUiState,
-                onBackPressed = onDetailScreenBackPressed,
-                modifier = modifier
-            )
-        }
+        ReplyDetailsScreen(
+            replyUiState = replyUiState,
+            isFullScreen = true,
+            onBackPressed = onDetailScreenBackPressed,
+            modifier = modifier
+        )
     }
 }
+
 
 @Composable
 private fun ReplyAppContent(
