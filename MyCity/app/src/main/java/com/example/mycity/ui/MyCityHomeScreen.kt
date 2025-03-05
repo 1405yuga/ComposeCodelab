@@ -22,6 +22,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.mycity.R
 import com.example.mycity.ui.data.PlacesData
@@ -34,10 +35,14 @@ fun MyCityApp(
     viewModel: MyCityViewModel = viewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val backStackEntry by navController.currentBackStackEntryAsState()
+    val currentScreen =
+        MyCityScreen.valueOf(backStackEntry?.destination?.route ?: MyCityScreen.Home.name)
+
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.app_name)) },
+                title = { Text(stringResource(currentScreen.title)) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = Color.White
