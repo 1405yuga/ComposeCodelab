@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,11 +18,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.mycity.ui.model.Category
 
 @Composable
 fun ItemsList(
     imageAndTitleList: List<Pair<Int, String>>,
-    onItemClick: () -> Unit,
+    onItemClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -31,13 +32,18 @@ fun ItemsList(
             .padding(horizontal = 12.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        items(imageAndTitleList) {
+        itemsIndexed(imageAndTitleList) { index, item ->
             ItemCard(
-                title = it.second,
-                image = it.first,
+                title = item.second,
+                image = item.first,
                 onClick = {
-//                    TODO ; handle fo recommendation list onclick
-                    onItemClick()
+                    try {
+                        Category.valueOf(item.second)
+                        onItemClick(item.second)
+                    } catch (e: Exception) {
+                        onItemClick(index.toString())
+                    }
+
                 }
             )
         }

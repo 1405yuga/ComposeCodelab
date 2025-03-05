@@ -14,7 +14,7 @@ import com.example.mycity.ui.model.Category
 @Composable
 fun RecommendationListScreen(
     placeNamesList: List<Pair<Int, String>>?,
-    onClick: () -> Unit,
+    onClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -24,7 +24,7 @@ fun RecommendationListScreen(
         placeNamesList?.let {
             ItemsList(
                 imageAndTitleList = placeNamesList,
-                onItemClick = { onClick() }
+                onItemClick = { onClick(it.toIntOrNull() ?: 0) }
             )
         } ?: Text(
             "Cannot load this category,\n please check!",

@@ -22,6 +22,9 @@ object PlacesData {
     fun getPlaceDetails(category: Category, index: Int): PlaceDetails? =
         getPlacesListByCategory(category)?.get(index)
 
+    fun getBlankPlaceDetail(): PlaceDetails =
+        PlaceDetails(0, "", "", false)
+
     private val allPlaces = mapOf(
         Category.COFFEE_SHOPS to listOf(
             PlaceDetails(
