@@ -20,7 +20,7 @@ import com.example.mycity.ui.data.PlacesData
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyCityHomeScreen() {
+fun MyCityApp() {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -32,13 +32,13 @@ fun MyCityHomeScreen() {
             )
         }
     ) { innerPadding ->
-        MyCityApp(modifier = Modifier.padding(innerPadding))
+        MyCityHomeScreen(modifier = Modifier.padding(innerPadding))
 
     }
 }
 
 @Composable
-fun MyCityApp(modifier: Modifier = Modifier) {
+fun MyCityHomeScreen(modifier: Modifier = Modifier) {
     val categoryListInPair = PlacesData.getAllCategoryInPair()
     Box(
         modifier = modifier.fillMaxSize(),
@@ -51,7 +51,7 @@ fun MyCityApp(modifier: Modifier = Modifier) {
 @Composable
 @Preview
 fun MyCityScreenPreview() {
-    MyCityHomeScreen()
+    MyCityApp()
 }
 
 @Composable
