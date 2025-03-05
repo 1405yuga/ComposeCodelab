@@ -24,7 +24,7 @@ fun RecommendationListScreen(
         placeNamesList?.let {
             ItemsList(
                 imageAndTitleList = placeNamesList,
-                onItemClick = {onClick()}
+                onItemClick = { onClick() }
             )
         } ?: Text(
             "Cannot load this category,\n please check!",

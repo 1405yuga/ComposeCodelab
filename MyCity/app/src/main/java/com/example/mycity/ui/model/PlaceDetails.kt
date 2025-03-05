@@ -1,7 +1,6 @@
 package com.example.mycity.ui.model
 
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import com.example.mycity.R
 
 data class PlaceDetails(

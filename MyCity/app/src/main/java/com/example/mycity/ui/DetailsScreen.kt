@@ -66,7 +66,7 @@ fun DetailsScreen(
 @Preview
 fun DetailsScreenPreview() {
     DetailsScreen(
-        placeDetails = PlacesData.getPlaceDetails(Category.COFFEE_SHOPS,0),
+        placeDetails = PlacesData.getPlaceDetails(Category.COFFEE_SHOPS, 0),
         onClick = {}
     )
 //    DetailsScreen(null)
