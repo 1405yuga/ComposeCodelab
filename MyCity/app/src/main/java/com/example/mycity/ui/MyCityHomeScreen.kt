@@ -1,5 +1,6 @@
 package com.example.mycity.ui
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -15,12 +16,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.mycity.R
 import com.example.mycity.ui.data.PlacesData
+import com.example.mycity.ui.model.Category
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyCityApp() {
+fun MyCityApp(
+    navController: NavHostController = rememberNavController()
+) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -32,19 +40,55 @@ fun MyCityApp() {
             )
         }
     ) { innerPadding ->
-        MyCityHomeScreen(modifier = Modifier.padding(innerPadding))
-
+        NavHost(
+            navController = navController,
+            modifier = Modifier.padding(innerPadding),
+            startDestination = MyCityScreen.Home.name
+        ) {
+            composable(route = MyCityScreen.Home.name) {
+                MyCityHomeScreen(
+                    onClick = { navController.navigate(MyCityScreen.RecommendationList.name) },
+                    modifier = Modifier
+                )
+            }
+            composable(route = MyCityScreen.RecommendationList.name) {
+                RecommendationListScreen(
+                    placeNamesList = PlacesData.getPlacesInImageAndTitleByCategory(
+                        Category.COFFEE_SHOPS
+                    ) //TODO:adjust category dynamically
+                    , onClick = { navController.navigate(MyCityScreen.DetailsScreen.name) }
+                )
+            }
+            composable(route = MyCityScreen.DetailsScreen.name) {
+                DetailsScreen(
+                    placeDetails = PlacesData.getPlaceDetails(
+                        Category.COFFEE_SHOPS,
+                        0
+                    ) // TODO:adjust
+                    , onClick = { navController.navigate(MyCityScreen.Home.name) }
+                )
+            }
+        }
     }
 }
 
 @Composable
-fun MyCityHomeScreen(modifier: Modifier = Modifier) {
+fun MyCityHomeScreen(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     val categoryListInPair = PlacesData.getAllCategoryInPair()
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        ItemsList(imageAndTitleList = categoryListInPair)
+        ItemsList(
+            imageAndTitleList = categoryListInPair,
+            onItemClick = {
+//                TODO:set selected category
+                onClick()
+            }
+        )
     }
 }
 
@@ -57,5 +101,12 @@ fun MyCityScreenPreview() {
 @Composable
 @Preview
 fun ItemsListPreview() {
-    ItemsList(imageAndTitleList = PlacesData.getAllCategoryInPair())
+    ItemsList(imageAndTitleList = PlacesData.getAllCategoryInPair(),
+        onItemClick = {})
+}
+
+enum class MyCityScreen(@StringRes val title: Int) {
+    Home(R.string.app_name),
+    RecommendationList(R.string.recommendation_screen),
+    DetailsScreen(R.string.detail_screen)
 }

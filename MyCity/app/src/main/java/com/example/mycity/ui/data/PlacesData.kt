@@ -5,20 +5,22 @@ import com.example.mycity.ui.model.Category
 import com.example.mycity.ui.model.PlaceDetails
 
 object PlacesData {
-    fun getPlaceDetailsListByCategory(category: Category): List<PlaceDetails>? {
-        return allPlaces[category]
-    }
-
     fun getAllCategoryInPair(): List<Pair<Int, String>> =
         allPlaces.keys.map { category -> Pair(category.categoryImage, category.name) }
 
+    private fun getPlacesListByCategory(category: Category): List<PlaceDetails>? =
+        allPlaces[category]
+
     fun getPlacesInImageAndTitleByCategory(category: Category): List<Pair<Int, String>>? =
-        allPlaces[category]?.map { placeDetails ->
+        getPlacesListByCategory(category)?.map { placeDetails ->
             Pair(
                 placeDetails.placeImage,
                 placeDetails.placeName
             )
         }
+
+    fun getPlaceDetails(category: Category, index: Int): PlaceDetails? =
+        getPlacesListByCategory(category)?.get(index)
 
     private val allPlaces = mapOf(
         Category.COFFEE_SHOPS to listOf(

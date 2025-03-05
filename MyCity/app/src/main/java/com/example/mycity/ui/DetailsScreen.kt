@@ -22,7 +22,11 @@ import com.example.mycity.ui.model.Category
 import com.example.mycity.ui.model.PlaceDetails
 
 @Composable
-fun DetailsScreen(placeDetails: PlaceDetails?, modifier: Modifier = Modifier) {
+fun DetailsScreen(
+    placeDetails: PlaceDetails?,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     placeDetails?.let {
         Column(
             modifier = modifier
@@ -62,7 +66,8 @@ fun DetailsScreen(placeDetails: PlaceDetails?, modifier: Modifier = Modifier) {
 @Preview
 fun DetailsScreenPreview() {
     DetailsScreen(
-        placeDetails = PlacesData.getPlaceDetailsListByCategory(Category.COFFEE_SHOPS)?.get(0)
+        placeDetails = PlacesData.getPlaceDetails(Category.COFFEE_SHOPS,0),
+        onClick = {}
     )
 //    DetailsScreen(null)
 

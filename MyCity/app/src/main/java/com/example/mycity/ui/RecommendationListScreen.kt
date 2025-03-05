@@ -14,6 +14,7 @@ import com.example.mycity.ui.model.Category
 @Composable
 fun RecommendationListScreen(
     placeNamesList: List<Pair<Int, String>>?,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -21,7 +22,10 @@ fun RecommendationListScreen(
         contentAlignment = Alignment.Center
     ) {
         placeNamesList?.let {
-            ItemsList(imageAndTitleList = placeNamesList)
+            ItemsList(
+                imageAndTitleList = placeNamesList,
+                onItemClick = {onClick()}
+            )
         } ?: Text(
             "Cannot load this category,\n please check!",
             fontSize = 22.sp,
@@ -33,6 +37,7 @@ fun RecommendationListScreen(
 @Preview
 fun RecommendationListScreenPreview() {
     RecommendationListScreen(
-        PlacesData.getPlacesInImageAndTitleByCategory(Category.COFFEE_SHOPS)
+        PlacesData.getPlacesInImageAndTitleByCategory(Category.COFFEE_SHOPS),
+        onClick = {}
     )
 }
