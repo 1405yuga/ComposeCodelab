@@ -41,6 +41,7 @@ import com.example.marsphotos.ui.theme.MarsPhotosTheme
 @Composable
 fun HomeScreen(
     marsUiState: MarsUiState,
+    retryAction: () -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
@@ -50,7 +51,10 @@ fun HomeScreen(
             marsUiState.photos, modifier = modifier.fillMaxWidth(), contentPadding = contentPadding
         )
 
-        is MarsUiState.Error -> ErrorScreen(modifier = modifier.fillMaxSize())
+        is MarsUiState.Error -> ErrorScreen(
+            retryAction = retryAction,
+            modifier = modifier.fillMaxSize()
+        )
     }
 }
 
