@@ -30,7 +30,7 @@ import com.example.marsphoto.network.MarsPhoto
 import kotlinx.coroutines.launch
 
 sealed interface MarsUiState {
-    data class Success(val photos: MarsPhoto) : MarsUiState
+    data class Success(val photos: List<MarsPhoto>) : MarsUiState
     object Error : MarsUiState
     object Loading : MarsUiState
 }
@@ -55,8 +55,7 @@ class MarsViewModel(private val marsPhotosRepository: MarsPhotoRepository) : Vie
     private fun getMarsPhotos() {
         viewModelScope.launch {
             marsUiState = try {
-                val listResult = marsPhotosRepository.getMarsPhotos()[0]
-                MarsUiState.Success(marsPhotosRepository.getMarsPhotos()[0])
+                MarsUiState.Success(marsPhotosRepository.getMarsPhotos())
             } catch (e: Exception) {
                 e.printStackTrace()
                 MarsUiState.Error
