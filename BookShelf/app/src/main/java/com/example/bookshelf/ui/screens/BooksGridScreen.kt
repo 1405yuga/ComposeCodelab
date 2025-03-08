@@ -19,9 +19,9 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.example.bookshelf.R
-import com.example.bookshelf.ui.data.Book
-import com.example.bookshelf.ui.data.ImageLinks
-import com.example.bookshelf.ui.data.VolumeInfo
+import com.example.bookshelf.data.Book
+import com.example.bookshelf.data.ImageLinks
+import com.example.bookshelf.data.VolumeInfo
 
 @Composable
 fun BooksGridScreen(
@@ -53,7 +53,7 @@ fun BookShelfCard(book: Book, modifier: Modifier = Modifier) {
     ) {
         AsyncImage(
             model = ImageRequest.Builder(context = LocalContext.current)
-                .data(book.imageLinks.thumbnail)
+                .data(book.volumeInfo.imageLinks?.thumbnail)
                 .crossfade(true)
                 .build(),
             placeholder = painterResource(R.drawable.loading_img),
@@ -68,8 +68,8 @@ fun BookShelfCard(book: Book, modifier: Modifier = Modifier) {
 fun BookShelfCardPreview() {
     BookShelfCard(
         Book(
-            id = "12", imageLinks = ImageLinks("com.a"),
-            volumeInfo = VolumeInfo("some title")
+            id = "12",
+            volumeInfo = VolumeInfo("some title", imageLinks = ImageLinks("com.a"))
         )
     )
 }
@@ -80,8 +80,8 @@ fun BookShelfGridPreview() {
     BooksGridScreen(
         List(10) {
             Book(
-                id = "$it", imageLinks = ImageLinks("com.a"),
-                volumeInfo = VolumeInfo("some title")
+                id = "12",
+                volumeInfo = VolumeInfo("some title", imageLinks = ImageLinks("com.a"))
             )
         }
     )

@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.example.bookshelf
+package com.example.bookshelf.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -17,11 +17,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.bookshelf.ui.data.Book
-import com.example.bookshelf.ui.data.ImageLinks
-import com.example.bookshelf.ui.data.VolumeInfo
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.bookshelf.R
+import com.example.bookshelf.data.Book
+import com.example.bookshelf.data.ImageLinks
+import com.example.bookshelf.data.VolumeInfo
+import com.example.bookshelf.ui.screens.BookViewModel
 import com.example.bookshelf.ui.screens.BooksGridScreen
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BookShelfApp() {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -30,11 +34,12 @@ fun BookShelfApp() {
         topBar = { BookTopAppBar(scrollBehavior) }
     ) { innerPadding ->
         Surface(modifier = Modifier.padding(innerPadding)) {
+            val bookViewModel: BookViewModel = viewModel(factory = BookViewModel.Factory)
             BooksGridScreen(
                 booksList = List(10) { //TODO: replace by data
                     Book(
-                        id = "$it", imageLinks = ImageLinks("com.a"),
-                        volumeInfo = VolumeInfo("some title")
+                        id = "$it",
+                        volumeInfo = VolumeInfo("some title", imageLinks = ImageLinks("com.a"))
                     )
                 },
                 modifier = Modifier
