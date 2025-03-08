@@ -19,11 +19,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.bookshelf.R
-import com.example.bookshelf.data.Book
-import com.example.bookshelf.data.ImageLinks
-import com.example.bookshelf.data.VolumeInfo
 import com.example.bookshelf.ui.screens.BookViewModel
 import com.example.bookshelf.ui.screens.BooksGridScreen
+import com.example.bookshelf.ui.screens.BooksUiState
+import com.example.bookshelf.ui.screens.ErrorScreen
+import com.example.bookshelf.ui.screens.LoadingScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,16 +35,18 @@ fun BookShelfApp() {
     ) { innerPadding ->
         Surface(modifier = Modifier.padding(innerPadding)) {
             val bookViewModel: BookViewModel = viewModel(factory = BookViewModel.Factory)
-            BooksGridScreen(
-                booksList = List(10) { //TODO: replace by data
-                    Book(
-                        id = "$it",
-                        volumeInfo = VolumeInfo("some title", imageLinks = ImageLinks("com.a"))
-                    )
-                },
-                modifier = Modifier
-                    .fillMaxSize()
-            )
+            when (val currentState = bookViewModel.booksUiState) {
+                is BooksUiState.Error -> ErrorScreen(
+                    retryAction = { bookViewModel.getBooks() },
+                    modifier = Modifier.fillMaxSize()
+                )
+
+                is BooksUiState.Loading -> LoadingScreen(modifier = Modifier.fillMaxSize())
+                is BooksUiState.Success -> BooksGridScreen(
+                    booksList = currentState.booksList,
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
         }
     }
 }
