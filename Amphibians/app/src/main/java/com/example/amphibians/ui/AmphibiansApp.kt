@@ -30,6 +30,7 @@ fun AmphibiansApp() {
         Surface(modifier = Modifier.fillMaxSize()) {
             HomeScreen(
                 amphibianUiState = amphibianViewModel.amphibianUiState,
+                onRetry = { amphibianViewModel.getAmphibiansList() },
                 contentPadding = it
             )
         }

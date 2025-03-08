@@ -32,6 +32,7 @@ class AmphibianViewModel(
 
     fun getAmphibiansList() {
         viewModelScope.launch {
+            amphibianUiState = AmphibianUiState.Loading
             amphibianUiState = try {
                 AmphibianUiState.Success(amphibianRepository.getAmphibians())
             } catch (e: Exception) {

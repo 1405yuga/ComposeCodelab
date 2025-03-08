@@ -29,6 +29,7 @@ import com.example.amphibians.model.Amphibian
 @Composable
 fun HomeScreen(
     amphibianUiState: AmphibianUiState,
+    onRetry: () -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp)
 ) {
@@ -39,7 +40,7 @@ fun HomeScreen(
     ) {
         when (amphibianUiState) {
             is AmphibianUiState.Success -> AmphibianList(amphibianUiState.amphibianList)
-            is AmphibianUiState.Error -> ErrorScreen()
+            is AmphibianUiState.Error -> ErrorScreen(onRetryClicked = onRetry)
             is AmphibianUiState.Loading -> LoadingScreen()
         }
     }
