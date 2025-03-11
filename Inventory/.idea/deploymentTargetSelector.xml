@@ -11,6 +11,9 @@
       <SelectionState runConfigName="dao_Insert_insertItemsIntoDb()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+      <SelectionState runConfigName="daoGetAllItems_returnAllItemsFromDb()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
     </selectionStates>
   </component>
 </project>
