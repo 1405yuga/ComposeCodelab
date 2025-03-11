@@ -63,4 +63,14 @@ class ItemDaoTest {
         assertEquals(allItems[1], item2)
     }
 
+    @Test
+    @kotlin.jvm.Throws(Exception::class)
+    fun daoUpdateItems_updatesItemsInDb() = runBlocking {
+        addTwoItemsToDb()
+        itemDao.editItem(Item(1, "Apples", 15.0, 25))
+        itemDao.editItem(Item(2, "Bananas", 5.0, 50))
+        val allItems = itemDao.getAllItems().first()
+        assertEquals(allItems[0], Item(1, "Apples", 15.0, 25))
+        assertEquals(allItems[1], Item(2, "Bananas", 5.0, 50))
+    }
 }

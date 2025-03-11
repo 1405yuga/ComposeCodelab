@@ -14,6 +14,9 @@
       <SelectionState runConfigName="daoGetAllItems_returnAllItemsFromDb()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+      <SelectionState runConfigName="daoUpdateItems_updatesItemsInDb()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
     </selectionStates>
   </component>
 </project>
