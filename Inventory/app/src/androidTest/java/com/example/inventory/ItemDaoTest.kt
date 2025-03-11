@@ -84,4 +84,12 @@ class ItemDaoTest {
         val allItems = itemDao.getAllItems().first()
         assertTrue(allItems.isEmpty())
     }
+
+    @Test
+    @kotlin.jvm.Throws(Exception::class)
+    fun daoGetItem_returnItemFromDB() = runBlocking {
+        addOneItemToDb()
+        val item = itemDao.getItem(1)
+        assertEquals(item.first(), item1)
+    }
 }
