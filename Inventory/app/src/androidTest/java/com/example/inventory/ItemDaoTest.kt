@@ -1,7 +1,6 @@
 package com.example.inventory
 
 import android.content.Context
-import android.util.Log
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -56,5 +55,12 @@ class ItemDaoTest {
         assertEquals(allItems[0], item1)
     }
 
+    @Test
+    fun daoGetAllItems_returnAllItemsFromDb() = runBlocking {
+        addTwoItemsToDb()
+        val allItems = itemDao.getAllItems().first()
+        assertEquals(allItems[0], item1)
+        assertEquals(allItems[1], item2)
+    }
 
 }
