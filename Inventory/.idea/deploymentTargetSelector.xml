@@ -8,9 +8,6 @@
       <SelectionState runConfigName="ItemDaoTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="dao_Insert_insertItemsIntoDb()">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="daoGetAllItems_returnAllItemsFromDb()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
@@ -18,6 +15,9 @@
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
       <SelectionState runConfigName="daoDeleteItems_deleteAllItemsFromDb()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="daoGetItem_returnItemFromDB()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
