@@ -14,13 +14,7 @@ data class AirportDetails(
     val passengers: Long
 )
 
-data class FlightDetailsCode(
-    val departureCode: String,
-    val destinationCode: String
-)
-
 data class FlightDetails(
-    val id: Int,
     val departureCode: String,
     val departureName: String,
     val destinationCode: String,

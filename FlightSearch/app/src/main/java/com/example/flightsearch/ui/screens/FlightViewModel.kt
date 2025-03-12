@@ -9,14 +9,14 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.flightsearch.FlightSearchApplication
 import com.example.flightsearch.ui.data.FlightDao
-import com.example.flightsearch.ui.data.FlightDetailsCode
+import com.example.flightsearch.ui.data.FlightDetails
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class FlightViewModel(private val flightDao: FlightDao) : ViewModel() {
 
     fun getAvailableFights() {
-        var result = emptyList<FlightDetailsCode>()
+        var result = emptyList<FlightDetails>()
         viewModelScope.launch {
             result = flightDao.getAvailableFlights().first()
         }.invokeOnCompletion {

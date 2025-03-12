@@ -52,7 +52,6 @@ fun HomeScreen(
         Text("Flights from *todo", fontWeight = FontWeight.Bold)
         FlightsListDisplayScreen(flightsList = List(10) {
             FlightDetails(
-                id = 12,
                 departureCode = "ABC",
                 destinationCode = "XYZ",
                 departureName = "Abc is name",
@@ -156,7 +155,6 @@ fun FlightCard(flightDetails: FlightDetails, modifier: Modifier = Modifier) {
 fun FlightCardPreview() {
     val flights = List(10) {
         FlightDetails(
-            id = 12,
             departureCode = "ABC",
             destinationCode = "XYZ",
             departureName = "Abc is name",
