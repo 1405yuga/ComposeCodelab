@@ -2,27 +2,37 @@ package com.example.flightsearch.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.flightsearch.R
+import com.example.flightsearch.ui.data.FlightDetails
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
@@ -34,6 +44,27 @@ fun HomeScreen(modifier: Modifier = Modifier) {
     ) {
         FlightSearchBar(modifier = Modifier)
         Text("Flights from *todo", fontWeight = FontWeight.Bold)
+        FlightsListDisplayScreen(flightsList = List(10) {
+            FlightDetails(
+                id = 12,
+                departureCode = "ABC",
+                destinationCode = "XYZ",
+                departureName = "Abc is name",
+                destinationName = "Xyz is loong name",
+            )
+        })
+    }
+}
+
+@Composable
+fun FlightsListDisplayScreen(flightsList: List<FlightDetails>, modifier: Modifier = Modifier) {
+    LazyColumn(
+        modifier,
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(flightsList) { item ->
+            FlightCard(flightDetails = item)
+        }
     }
 }
 
@@ -69,6 +100,65 @@ fun FlightTopAppBar() {
     )
 }
 
+@Composable
+fun FlightCard(flightDetails: FlightDetails, modifier: Modifier = Modifier) {
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(2.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer
+        )
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .weight(1f),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Text("DEPART")
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    modifier = Modifier.padding(bottom = 8.dp)
+                ) {
+                    Text(
+                        text = flightDetails.departureCode,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(text = flightDetails.departureName)
+                }
+                Text("ARRIVE")
+                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text(
+                        text = flightDetails.destinationCode,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(text = flightDetails.destinationName)
+                }
+            }
+            OutlinedIconButton(onClick = {}) {
+                Icon(imageVector = Icons.Default.Favorite, contentDescription = "Add to fav")
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun FlightCardPreview() {
+    val flights = List(10) {
+        FlightDetails(
+            id = 12,
+            departureCode = "ABC",
+            destinationCode = "XYZ",
+            departureName = "Abc is name",
+            destinationName = "Xyz is loong name",
+        )
+    }
+    FlightsListDisplayScreen(flights)
+}
 
 @Preview
 @Composable
