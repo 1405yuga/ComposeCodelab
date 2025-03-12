@@ -27,7 +27,7 @@ class UserPreferenceRepository(private val dataStore: DataStore<Preferences>) {
             if (it is IOException) {
                 Log.e(this.javaClass.simpleName, "Error reading preference.", it)
                 emit(emptyPreferences())
-            }else{
+            } else {
                 throw it
             }
         }
