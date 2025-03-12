@@ -31,11 +31,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flightsearch.R
 import com.example.flightsearch.ui.data.FlightDetails
+import com.example.flightsearch.ui.screens.FlightViewModel.Companion.factory
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun HomeScreen(
+    modifier: Modifier = Modifier,
+    viewModel: FlightViewModel = viewModel(factory = factory)
+) {
+    viewModel.getAvailableFights()
     Column(
         modifier = modifier
             .padding(horizontal = 8.dp)

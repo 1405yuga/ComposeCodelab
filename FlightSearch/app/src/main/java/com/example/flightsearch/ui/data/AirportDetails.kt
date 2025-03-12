@@ -14,13 +14,8 @@ data class AirportDetails(
     val passengers: Long
 )
 
-@Entity(tableName = "favorite")
 data class FlightDetailsCode(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int,
-    @ColumnInfo("departure_code")
     val departureCode: String,
-    @ColumnInfo("destination_code")
     val destinationCode: String
 )
 
