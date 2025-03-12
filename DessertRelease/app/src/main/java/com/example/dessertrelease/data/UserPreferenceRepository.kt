@@ -4,6 +4,8 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class UserPreferenceRepository(private val dataStore: DataStore<Preferences>) {
     private companion object {
@@ -14,5 +16,9 @@ class UserPreferenceRepository(private val dataStore: DataStore<Preferences>) {
         dataStore.edit { preferences ->
             preferences[IS_LINEAR_LAYOUT] = isLinearLayout
         }
+    }
+
+    val isLinearLayout: Flow<Boolean> = dataStore.data.map { preferences ->
+        preferences[IS_LINEAR_LAYOUT] ?: true
     }
 }
