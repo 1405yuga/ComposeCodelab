@@ -1,5 +1,6 @@
 package com.example.flightsearch.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,6 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -59,13 +61,17 @@ fun HomeScreen(
     val favoriteFlights by viewModel.getFavoriteFlights().collectAsState(emptyList())
     val coroutineScope = rememberCoroutineScope()
     var screen by rememberSaveable { mutableStateOf(Screen.DisplayAll) }
-    var searchQuery by rememberSaveable { mutableStateOf("") }
+    val searchedQuery by viewModel.searchQuery.collectAsState("")
+    var searchQuery by rememberSaveable { mutableStateOf(searchedQuery) }
+
+    LaunchedEffect(searchedQuery) { searchQuery = searchedQuery }
     val filteredFlights =
         (if (screen == Screen.DisplayAll) flightList else favoriteFlights).filter {
             it.departureCode.contains(searchQuery, ignoreCase = true) ||
                     it.departureCode.contains(searchQuery, ignoreCase = true)
         }
 
+    Log.d("SEARCH QUERY", "searched: $searchedQuery, search : $searchQuery")
     Column(
         modifier = modifier
             .padding(horizontal = 8.dp)
@@ -74,11 +80,16 @@ fun HomeScreen(
     ) {
         FlightSearchBar(
             query = searchQuery,
-            onQueryChange = { searchQuery = it },
+            onQueryChange = {
+                searchQuery = it
+                viewModel.setQuery(it)
+            },
             modifier = Modifier
         )
         Text("Flights from *todo", fontWeight = FontWeight.Bold)
-        ScreenToggleButton(currentScreen = screen, onToggle = { screen = it })
+        ScreenToggleButton(
+            currentScreen = screen,
+            onToggle = { screen = it })
         FlightsListDisplayScreen(
             flightsList = filteredFlights,
             onFavoriteClick = { flightDetails ->
