@@ -1,16 +1,16 @@
 package com.example.bluromatic
 
+import android.content.ContentResolver
+import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import com.example.bluromatic.ui.BluromaticScreen
 import com.example.bluromatic.ui.theme.BlurOMaticTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,29 +19,23 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             BlurOMaticTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                Surface(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    BluromaticScreen()
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+fun Context.getImageUri(): Uri {
+    val resources = this.resources
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    BlurOMaticTheme {
-        Greeting("Android")
-    }
+    return Uri.Builder()
+        .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+        .authority(resources.getResourcePackageName(R.drawable.android_cupcake))
+        .appendPath(resources.getResourceTypeName(R.drawable.android_cupcake))
+        .appendPath(resources.getResourceEntryName(R.drawable.android_cupcake))
+        .build()
 }
