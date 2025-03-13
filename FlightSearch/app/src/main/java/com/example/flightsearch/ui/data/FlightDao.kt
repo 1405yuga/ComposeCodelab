@@ -22,7 +22,8 @@ interface FlightDao {
         ON f.departure_code = departed.iata_code 
         AND f.destination_code = destination.iata_code
     WHERE departed.id != destination.id
-    """    )
+    """
+    )
     fun getAvailableFlights(): Flow<List<FlightDetails>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -44,4 +45,7 @@ interface FlightDao {
     """
     )
     fun getAllFavoriteFlights(): Flow<List<FlightDetails>>
+
+    @Query("DELETE FROM Favorite WHERE departure_code= :departureCode AND destination_code= :destinationCode")
+    suspend fun deleteFromFavorite(departureCode: String, destinationCode: String)
 }

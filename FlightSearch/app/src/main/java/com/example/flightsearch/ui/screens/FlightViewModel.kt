@@ -10,7 +10,6 @@ import com.example.flightsearch.ui.data.Favorite
 import com.example.flightsearch.ui.data.FlightDao
 import com.example.flightsearch.ui.data.FlightDetails
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
 class FlightViewModel(private val flightDao: FlightDao) : ViewModel() {
 
@@ -27,6 +26,13 @@ class FlightViewModel(private val flightDao: FlightDao) : ViewModel() {
         ) {
             flightDao.insertToFavorite(flightDetails.toFavorite())
         }
+    }
+
+    suspend fun removeFromFavorite(flightDetails: FlightDetails) {
+        flightDao.deleteFromFavorite(
+            departureCode = flightDetails.departureCode,
+            destinationCode = flightDetails.destinationCode
+        )
     }
 
     init {

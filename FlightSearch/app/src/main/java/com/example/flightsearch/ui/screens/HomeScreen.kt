@@ -61,7 +61,8 @@ fun HomeScreen(
         Text("Flights from *todo", fontWeight = FontWeight.Bold)
         FlightsListDisplayScreen(flightList, onFavoriteClick = { flightDetails ->
             coroutineScope.launch {
-                viewModel.addToFavorite(flightDetails)
+                if (flightDetails.isFavorite) viewModel.removeFromFavorite(flightDetails)
+                else viewModel.addToFavorite(flightDetails)
             }
         })
     }
