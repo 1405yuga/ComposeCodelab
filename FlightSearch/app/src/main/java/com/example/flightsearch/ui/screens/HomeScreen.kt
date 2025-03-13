@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -160,7 +161,10 @@ fun FlightCard(
                 }
             }
             OutlinedIconButton(onClick = { onFavoriteClick(flightDetails) }) {
-                Icon(imageVector = Icons.Default.Favorite, contentDescription = "Add to fav")
+                Icon(
+                    imageVector = if (flightDetails.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                    contentDescription = "Add to fav"
+                )
             }
         }
     }
@@ -175,6 +179,7 @@ fun FlightListPreview() {
             destinationCode = "XYZ",
             departureName = "Abc is name",
             destinationName = "Xyz is loong name",
+            isFavorite = false
         )
     }
     FlightsListDisplayScreen(flights, onFavoriteClick = {})

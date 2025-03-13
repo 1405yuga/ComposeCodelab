@@ -18,7 +18,8 @@ data class FlightDetails(
     val departureCode: String,
     val departureName: String,
     val destinationCode: String,
-    val destinationName: String
+    val destinationName: String,
+    val isFavorite: Boolean = false
 )
 
 @Entity

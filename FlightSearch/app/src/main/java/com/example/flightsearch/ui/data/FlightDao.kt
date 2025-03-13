@@ -10,14 +10,19 @@ import kotlinx.coroutines.flow.Flow
 interface FlightDao {
     @Query(
         """
-SELECT 
+    SELECT 
         departed.iata_code AS departureCode,
         departed.name AS departureName,
-        destination.iata_code AS destinationCode ,
-        destination.name AS destinationName
-from airport AS departed, airport AS destination WHERE departed.id!=destination.id
-"""
-    )
+        destination.iata_code AS destinationCode,
+        destination.name AS destinationName,
+        CASE WHEN f.id IS NOT NULL THEN 1 ELSE 0 END AS isFavorite
+    FROM airport AS departed
+    CROSS JOIN airport AS destination
+    LEFT JOIN Favorite f 
+        ON f.departure_code = departed.iata_code 
+        AND f.destination_code = destination.iata_code
+    WHERE departed.id != destination.id
+    """    )
     fun getAvailableFlights(): Flow<List<FlightDetails>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -31,7 +36,8 @@ from airport AS departed, airport AS destination WHERE departed.id!=destination.
       SELECT f.departure_code AS departureCode,
       dep.name AS departureName,
       f.destination_code AS destinationCode,
-      dest.name AS destinationName
+      dest.name AS destinationName,
+      1 AS isFavorite
       FROM Favorite f
       JOIN airport dep ON f.departure_code = dep.iata_code
       JOIN airport dest ON f.destination_code = dest.iata_code
