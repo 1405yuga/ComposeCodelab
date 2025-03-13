@@ -29,3 +29,8 @@
 - BookShelf
 - MarsPhoto (with coil)
 ## Room Database
+- Inventory
+- BusSchedule
+## Datastore
+- DessertRelease
+- FlightSearch (room + datastore)
