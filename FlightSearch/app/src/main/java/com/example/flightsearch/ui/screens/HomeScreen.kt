@@ -1,6 +1,5 @@
 package com.example.flightsearch.ui.screens
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +14,7 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -29,7 +29,10 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -42,6 +45,11 @@ import com.example.flightsearch.ui.data.FlightDetails
 import com.example.flightsearch.ui.screens.FlightViewModel.Companion.factory
 import kotlinx.coroutines.launch
 
+enum class Screen {
+    DisplayAll,
+    DisplayFavorites
+}
+
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
@@ -50,7 +58,8 @@ fun HomeScreen(
     val flightList by viewModel.getAvailableFights().collectAsState(emptyList())
     val favoriteFlights by viewModel.getFavoriteFlights().collectAsState(emptyList())
     val coroutineScope = rememberCoroutineScope()
-    Log.d("FAVORITE", "Result: ${favoriteFlights.size}")
+    var screen by rememberSaveable { mutableStateOf(Screen.DisplayAll) }
+
     Column(
         modifier = modifier
             .padding(horizontal = 8.dp)
@@ -59,12 +68,25 @@ fun HomeScreen(
     ) {
         FlightSearchBar(modifier = Modifier)
         Text("Flights from *todo", fontWeight = FontWeight.Bold)
-        FlightsListDisplayScreen(flightList, onFavoriteClick = { flightDetails ->
-            coroutineScope.launch {
-                if (flightDetails.isFavorite) viewModel.removeFromFavorite(flightDetails)
-                else viewModel.addToFavorite(flightDetails)
-            }
-        })
+        ScreenToggleButton(currentScreen = screen, onToggle = { screen = it })
+        FlightsListDisplayScreen(
+            flightsList = if (screen == Screen.DisplayAll) flightList else favoriteFlights,
+            onFavoriteClick = { flightDetails ->
+                coroutineScope.launch {
+                    if (flightDetails.isFavorite) viewModel.removeFromFavorite(flightDetails)
+                    else viewModel.addToFavorite(flightDetails)
+                }
+            })
+    }
+}
+
+@Composable
+fun ScreenToggleButton(currentScreen: Screen, onToggle: (Screen) -> (Unit)) {
+    val isFavorite = currentScreen == Screen.DisplayFavorites
+    Button(onClick = {
+        onToggle(if (currentScreen == Screen.DisplayAll) Screen.DisplayFavorites else Screen.DisplayAll)
+    }) {
+        Text(text = if (isFavorite) "Show All" else "Show Favorites")
     }
 }
 
