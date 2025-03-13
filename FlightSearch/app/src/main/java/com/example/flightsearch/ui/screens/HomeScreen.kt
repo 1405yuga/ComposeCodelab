@@ -1,5 +1,6 @@
 package com.example.flightsearch.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -46,7 +47,9 @@ fun HomeScreen(
     viewModel: FlightViewModel = viewModel(factory = factory)
 ) {
     val flightList by viewModel.getAvailableFights().collectAsState(emptyList())
-    val corutineScope = rememberCoroutineScope()
+    val favoriteFlights by viewModel.getFavoriteFlights().collectAsState(emptyList())
+    val coroutineScope = rememberCoroutineScope()
+    Log.d("FAVORITE", "Result: ${favoriteFlights.size}")
     Column(
         modifier = modifier
             .padding(horizontal = 8.dp)
@@ -56,7 +59,7 @@ fun HomeScreen(
         FlightSearchBar(modifier = Modifier)
         Text("Flights from *todo", fontWeight = FontWeight.Bold)
         FlightsListDisplayScreen(flightList, onFavoriteClick = { flightDetails ->
-            corutineScope.launch {
+            coroutineScope.launch {
                 viewModel.addToFavorite(flightDetails)
             }
         })

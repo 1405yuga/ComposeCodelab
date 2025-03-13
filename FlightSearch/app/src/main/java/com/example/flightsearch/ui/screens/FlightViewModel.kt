@@ -15,6 +15,8 @@ class FlightViewModel(private val flightDao: FlightDao) : ViewModel() {
 
     fun getAvailableFights(): Flow<List<FlightDetails>> = flightDao.getAvailableFlights()
 
+    fun getFavoriteFlights(): Flow<List<FlightDetails>> = flightDao.getAllFavoriteFlights()
+
     suspend fun addToFavorite(flightDetails: FlightDetails) {
         flightDao.insertToFavorite(flightDetails.toFavorite())
     }
