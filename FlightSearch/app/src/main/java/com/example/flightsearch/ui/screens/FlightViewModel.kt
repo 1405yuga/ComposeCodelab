@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.flightsearch.FlightSearchApplication
+import com.example.flightsearch.ui.data.Favorite
 import com.example.flightsearch.ui.data.FlightDao
 import com.example.flightsearch.ui.data.FlightDetails
 import kotlinx.coroutines.flow.Flow
@@ -13,6 +14,10 @@ import kotlinx.coroutines.flow.Flow
 class FlightViewModel(private val flightDao: FlightDao) : ViewModel() {
 
     fun getAvailableFights(): Flow<List<FlightDetails>> = flightDao.getAvailableFlights()
+
+    suspend fun addToFavorite(flightDetails: FlightDetails) {
+        flightDao.insertToFavorite(flightDetails.toFavorite())
+    }
 
     init {
         getAvailableFights()
@@ -26,4 +31,12 @@ class FlightViewModel(private val flightDao: FlightDao) : ViewModel() {
             }
         }
     }
+}
+
+fun FlightDetails.toFavorite(): Favorite {
+    return Favorite(
+        id = 0,
+        departureCode = this.departureCode,
+        destinationCode = this.destinationCode
+    )
 }

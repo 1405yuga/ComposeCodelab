@@ -27,6 +27,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -37,6 +38,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flightsearch.R
 import com.example.flightsearch.ui.data.FlightDetails
 import com.example.flightsearch.ui.screens.FlightViewModel.Companion.factory
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(
@@ -44,6 +46,7 @@ fun HomeScreen(
     viewModel: FlightViewModel = viewModel(factory = factory)
 ) {
     val flightList by viewModel.getAvailableFights().collectAsState(emptyList())
+    val corutineScope = rememberCoroutineScope()
     Column(
         modifier = modifier
             .padding(horizontal = 8.dp)
@@ -52,18 +55,29 @@ fun HomeScreen(
     ) {
         FlightSearchBar(modifier = Modifier)
         Text("Flights from *todo", fontWeight = FontWeight.Bold)
-        FlightsListDisplayScreen(flightList)
+        FlightsListDisplayScreen(flightList, onFavoriteClick = { flightDetails ->
+            corutineScope.launch {
+                viewModel.addToFavorite(flightDetails)
+            }
+        })
     }
 }
 
 @Composable
-fun FlightsListDisplayScreen(flightsList: List<FlightDetails>, modifier: Modifier = Modifier) {
+fun FlightsListDisplayScreen(
+    flightsList: List<FlightDetails>,
+    onFavoriteClick: (FlightDetails) -> Unit,
+    modifier: Modifier = Modifier
+) {
     LazyColumn(
         modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(flightsList) { item ->
-            FlightCard(flightDetails = item)
+            FlightCard(
+                flightDetails = item,
+                onFavoriteClick = onFavoriteClick
+            )
         }
     }
 }
@@ -101,7 +115,11 @@ fun FlightTopAppBar() {
 }
 
 @Composable
-fun FlightCard(flightDetails: FlightDetails, modifier: Modifier = Modifier) {
+fun FlightCard(
+    flightDetails: FlightDetails,
+    onFavoriteClick: (FlightDetails) -> Unit,
+    modifier: Modifier = Modifier
+) {
     Card(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(2.dp),
@@ -138,7 +156,7 @@ fun FlightCard(flightDetails: FlightDetails, modifier: Modifier = Modifier) {
                     Text(text = flightDetails.destinationName)
                 }
             }
-            OutlinedIconButton(onClick = {}) {
+            OutlinedIconButton(onClick = { onFavoriteClick(flightDetails) }) {
                 Icon(imageVector = Icons.Default.Favorite, contentDescription = "Add to fav")
             }
         }
@@ -147,7 +165,7 @@ fun FlightCard(flightDetails: FlightDetails, modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-fun FlightCardPreview() {
+fun FlightListPreview() {
     val flights = List(10) {
         FlightDetails(
             departureCode = "ABC",
@@ -156,7 +174,7 @@ fun FlightCardPreview() {
             destinationName = "Xyz is loong name",
         )
     }
-    FlightsListDisplayScreen(flights)
+    FlightsListDisplayScreen(flights, onFavoriteClick = {})
 }
 
 @Preview
