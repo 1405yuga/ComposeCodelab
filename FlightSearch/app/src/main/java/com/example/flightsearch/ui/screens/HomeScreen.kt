@@ -78,18 +78,17 @@ fun HomeScreen(
             .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
+        ScreenToggleButton(
+            currentScreen = screen,
+            onToggle = { screen = it })
+
         FlightSearchBar(
             query = searchQuery,
             onQueryChange = {
                 searchQuery = it
                 viewModel.setQuery(it)
-            },
-            modifier = Modifier
+            }
         )
-        Text("Flights from *todo", fontWeight = FontWeight.Bold)
-        ScreenToggleButton(
-            currentScreen = screen,
-            onToggle = { screen = it })
         FlightsListDisplayScreen(
             flightsList = filteredFlights,
             onFavoriteClick = { flightDetails ->
@@ -145,7 +144,8 @@ fun FlightSearchBar(
         onActiveChange = { },
         placeholder = { Text("Search flights..") },
         modifier = modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .padding(0.dp),
         leadingIcon = {
             Icon(Icons.Default.Search, contentDescription = "search icon")
         },
