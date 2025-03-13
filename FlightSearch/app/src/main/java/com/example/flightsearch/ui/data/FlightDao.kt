@@ -8,7 +8,8 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FlightDao {
-    @Query( """
+    @Query(
+        """
 SELECT 
         departed.iata_code AS departureCode,
         departed.name AS departureName,
@@ -19,10 +20,14 @@ from airport AS departed, airport AS destination WHERE departed.id!=destination.
     )
     fun getAvailableFlights(): Flow<List<FlightDetails>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertToFavorite(favorite: Favorite)
 
-    @Query("""
+    @Query("SELECT COUNT(*) FROM Favorite WHERE departure_code = :departureCode AND destination_code = :destinationCode")
+    suspend fun isFlightFavorite(departureCode: String, destinationCode: String): Int
+
+    @Query(
+        """
       SELECT f.departure_code AS departureCode,
       dep.name AS departureName,
       f.destination_code AS destinationCode,
@@ -30,6 +35,7 @@ from airport AS departed, airport AS destination WHERE departed.id!=destination.
       FROM Favorite f
       JOIN airport dep ON f.departure_code = dep.iata_code
       JOIN airport dest ON f.destination_code = dest.iata_code
-    """)
-    fun getAllFavoriteFlights():Flow<List<FlightDetails>>
+    """
+    )
+    fun getAllFavoriteFlights(): Flow<List<FlightDetails>>
 }

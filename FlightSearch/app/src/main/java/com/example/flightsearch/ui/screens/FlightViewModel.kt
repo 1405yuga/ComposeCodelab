@@ -18,7 +18,13 @@ class FlightViewModel(private val flightDao: FlightDao) : ViewModel() {
     fun getFavoriteFlights(): Flow<List<FlightDetails>> = flightDao.getAllFavoriteFlights()
 
     suspend fun addToFavorite(flightDetails: FlightDetails) {
-        flightDao.insertToFavorite(flightDetails.toFavorite())
+        if (flightDao.isFlightFavorite(
+                departureCode = flightDetails.departureCode,
+                destinationCode = flightDetails.destinationCode
+            ) < 1
+        ) {
+            flightDao.insertToFavorite(flightDetails.toFavorite())
+        }
     }
 
     init {
