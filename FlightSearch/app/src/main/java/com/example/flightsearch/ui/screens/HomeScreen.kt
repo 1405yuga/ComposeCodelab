@@ -59,6 +59,12 @@ fun HomeScreen(
     val favoriteFlights by viewModel.getFavoriteFlights().collectAsState(emptyList())
     val coroutineScope = rememberCoroutineScope()
     var screen by rememberSaveable { mutableStateOf(Screen.DisplayAll) }
+    var searchQuery by rememberSaveable { mutableStateOf("") }
+    val filteredFlights =
+        (if (screen == Screen.DisplayAll) flightList else favoriteFlights).filter {
+            it.departureCode.contains(searchQuery, ignoreCase = true) ||
+                    it.departureCode.contains(searchQuery, ignoreCase = true)
+        }
 
     Column(
         modifier = modifier
@@ -66,11 +72,15 @@ fun HomeScreen(
             .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        FlightSearchBar(modifier = Modifier)
+        FlightSearchBar(
+            query = searchQuery,
+            onQueryChange = { searchQuery = it },
+            modifier = Modifier
+        )
         Text("Flights from *todo", fontWeight = FontWeight.Bold)
         ScreenToggleButton(currentScreen = screen, onToggle = { screen = it })
         FlightsListDisplayScreen(
-            flightsList = if (screen == Screen.DisplayAll) flightList else favoriteFlights,
+            flightsList = filteredFlights,
             onFavoriteClick = { flightDetails ->
                 coroutineScope.launch {
                     if (flightDetails.isFavorite) viewModel.removeFromFavorite(flightDetails)
@@ -111,20 +121,29 @@ fun FlightsListDisplayScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FlightSearchBar(modifier: Modifier = Modifier) {
+fun FlightSearchBar(
+    query: String,
+    onQueryChange: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
     SearchBar(
-        query = "",
-        onQueryChange = {},
+        query = query,
+        onQueryChange = onQueryChange,
         onSearch = {},
         active = false,
-        onActiveChange = {},
+        onActiveChange = { },
+        placeholder = { Text("Search flights..") },
         modifier = modifier
             .fillMaxWidth(),
         leadingIcon = {
             Icon(Icons.Default.Search, contentDescription = "search icon")
         },
         trailingIcon = {
-            Icon(Icons.Default.Clear, contentDescription = "Clear Search")
+            if (query.isNotEmpty()) {
+                OutlinedIconButton(onClick = { onQueryChange("") }) {
+                    Icon(Icons.Default.Clear, contentDescription = "Clear Search")
+                }
+            }
         }
     ) { }
 }
