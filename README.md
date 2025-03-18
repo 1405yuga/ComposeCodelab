@@ -34,3 +34,5 @@
 ## Datastore
 - DessertRelease
 - FlightSearch (room + datastore)
+## WorkManager
+- BlurOMatic
