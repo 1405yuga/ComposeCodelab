@@ -58,4 +58,10 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    // Junit
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    // Work testing
+    androidTestImplementation("androidx.work:work-testing:2.10.0")
 }
