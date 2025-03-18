@@ -36,3 +36,4 @@
 - FlightSearch (room + datastore)
 ## WorkManager
 - BlurOMatic
+- WaterMe
