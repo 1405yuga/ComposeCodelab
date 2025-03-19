@@ -56,6 +56,7 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
     }
     packaging {
         resources {
@@ -78,6 +79,7 @@ dependencies {
     implementation("androidx.room:room-ktx:${rootProject.extra["room_version"]}")
     implementation("androidx.room:room-runtime:${rootProject.extra["room_version"]}")
     implementation("com.google.android.gms:play-services-ads:23.6.0")
+    implementation("com.google.android.material:material:1.12.0")
 
     ksp("androidx.room:room-compiler:${rootProject.extra["room_version"]}")
 
